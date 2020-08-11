@@ -1,22 +1,34 @@
 import { gql, useQuery } from '@apollo/client'
+import * as React from 'react'
 
 import Layout from '../components/layout'
-import { H1 } from '../styles/content'
+import { H1, H2, Card, Container } from '../styles/content'
 
-const GetHello = gql`
-  query GetHello {
-    hello
+const GetNotes = gql`
+  query GetNotes {
+    notes {
+      title
+      description
+    }
   }
 `
 
-const Home = () => {
-  const { data, error, loading } = useQuery(GetHello)
-
+const Home: React.FunctionComponent = () => {
+  const { data, error, loading } = useQuery(GetNotes)
   return (
     <Layout title='| Home'>
-      {loading && <H1>Loading...</H1>}
-      {error && <H1>Uh oh an error occured :(</H1>}
-      {data && <H1>{data.hello}</H1>}
+      <Container>
+        {loading && <H1>Loading...</H1>}
+        {error && <H1>Uh oh an error occured :(</H1>}
+        {data &&
+          data.notes &&
+          data.notes.map(({ title, description }, idx) => (
+            <Card key={idx}>
+              <H2>{title}</H2>
+              <p>{description}</p>
+            </Card>
+          ))}
+      </Container>
     </Layout>
   )
 }

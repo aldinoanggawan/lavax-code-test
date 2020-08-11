@@ -2,6 +2,11 @@ import { gql } from '@apollo/client'
 
 export const typeDefs = gql`
   type Query {
-    hello: String!
+    notes: [Note]!
+  }
+
+  type Note {
+    title: String!
+    description: String!
   }
 `

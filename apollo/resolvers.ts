@@ -1,5 +1,7 @@
+import Note from '../models/Note'
+
 export const resolvers = {
   Query: {
-    hello: () => 'Hello from GraphQL!',
+    notes: () => Note.find({}),
   },
 }
