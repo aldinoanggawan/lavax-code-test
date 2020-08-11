@@ -4,6 +4,15 @@ import * as React from 'react'
 import Layout from '../components/layout'
 import { H1, H2, Card, Container } from '../styles/content'
 
+interface Notes {
+  title: string
+  description: string
+}
+
+interface NotesData {
+  notes: Notes[]
+}
+
 const GetNotes = gql`
   query GetNotes {
     notes {
@@ -14,7 +23,7 @@ const GetNotes = gql`
 `
 
 const Home: React.FunctionComponent = () => {
-  const { data, error, loading } = useQuery(GetNotes)
+  const { data, error, loading } = useQuery<NotesData>(GetNotes)
   return (
     <Layout title='| Home'>
       <Container>
