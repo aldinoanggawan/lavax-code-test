@@ -5,8 +5,8 @@ import { GET_NOTES } from './NotesList'
 import { Form, Input } from '../styles/content'
 
 const CREATE_NOTE_MUTATION = gql`
-  mutation CreateNote($title: String!, $description: String!) {
-    createNote(title: $title, description: $description) {
+  mutation CreateNote($noteInput: NoteInput) {
+    createNote(noteInput: $noteInput) {
       id
       title
       description
@@ -34,7 +34,7 @@ const AddNoteForm = () => {
     setDescription('')
 
     createNote({
-      variables: { title, description },
+      variables: { noteInput: { title, description } },
       update: (proxy, { data: { createNote } }) => {
         const data: any = proxy.readQuery({
           query: GET_NOTES,
