@@ -30,6 +30,8 @@ const AddNoteForm = () => {
 
   const handleSubmit = (e: any) => {
     e.preventDefault()
+    setTitle('')
+    setDescription('')
 
     createNote({
       variables: { title, description },
@@ -66,6 +68,7 @@ const AddNoteForm = () => {
         onChange={handleOnChangeDescription}
       />
       <Input
+        button
         type='submit'
         disabled={loading}
         value={loading ? 'LOADING...' : 'SUBMIT'}
