@@ -36,7 +36,7 @@ const AddNoteForm = () => {
           query: GET_NOTES,
           data: {
             ...data,
-            notes: [...data.notes, createNote],
+            notes: [createNote, ...data.notes],
           },
         })
       },

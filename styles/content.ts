@@ -8,8 +8,8 @@ interface InputProps {
   readonly button?: boolean
 }
 
-interface RowProps {
-  readonly right?: boolean
+interface SpanProps {
+  readonly date?: boolean
 }
 
 // typography (alphabetical order)
@@ -108,7 +108,18 @@ export const Input = styled.input<InputProps>`
     `}
 `
 
-export const Row = styled.div<RowProps>`
+export const Row = styled.div`
   display: flex;
-  justify-content: ${({ right }) => (right ? 'flex-end' : 'flex-start')};
+  justify-content: space-between;
+  margin-top: 2em;
+`
+
+export const Span = styled.span<SpanProps>`
+  ${({ date }) =>
+    date &&
+    css`
+      font-size: 0.625rem;
+      opacity: 0.6;
+      align-self: flex-end;
+    `}
 `

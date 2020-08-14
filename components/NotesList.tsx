@@ -7,6 +7,7 @@ interface Notes {
   id: string
   title: string
   description: string
+  updatedAt: number
 }
 
 interface NotesData {
@@ -19,6 +20,7 @@ export const GET_NOTES = gql`
       id
       title
       description
+      updatedAt
     }
   }
 `
@@ -34,6 +36,8 @@ const DELETE_NOTE_MUTATION = gql`
 
 const NotesList = () => {
   const { data } = useQuery<NotesData>(GET_NOTES)
+  const sortedNotes = [...data?.notes].sort((a, b) => b.updatedAt - a.updatedAt)
+
   const [deleteNote, { loading }] = useMutation(DELETE_NOTE_MUTATION)
 
   const handleDeleteNote = (id: string) => {
@@ -63,8 +67,8 @@ const NotesList = () => {
 
   return (
     <>
-      {data?.notes.length ? (
-        data?.notes.map(note => (
+      {sortedNotes.length ? (
+        sortedNotes.map(note => (
           <Note
             key={note.id}
             {...note}
