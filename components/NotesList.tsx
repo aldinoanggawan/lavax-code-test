@@ -1,9 +1,9 @@
 import { gql, useMutation, useQuery } from '@apollo/client'
 
-import { H2, DeleteButton, Card } from '../styles/content'
-import { DeleteIcon } from '../styles/icons'
+import Note from './Note'
+import { H2 } from '../styles/content'
 
-export interface Notes {
+interface Notes {
   id: string
   title: string
   description: string
@@ -64,17 +64,13 @@ const NotesList = () => {
   return (
     <>
       {data?.notes.length ? (
-        data?.notes.map(({ id, description, title }) => (
-          <Card key={id}>
-            <DeleteButton
-              disabled={loading}
-              onClick={() => handleDeleteNote(id)}
-            >
-              <DeleteIcon />
-            </DeleteButton>
-            <H2>{title}</H2>
-            <p>{description}</p>
-          </Card>
+        data?.notes.map(note => (
+          <Note
+            key={note.id}
+            {...note}
+            handleDeleteNote={handleDeleteNote}
+            loading={loading}
+          />
         ))
       ) : (
         <H2 center>No available note</H2>

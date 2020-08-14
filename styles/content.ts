@@ -9,9 +9,10 @@ interface InputProps {
 }
 
 interface RowProps {
-  readonly right: boolean
+  readonly right?: boolean
 }
 
+// typography (alphabetical order)
 export const H1 = styled.h1`
   font-size: 2rem;
   text-align: center;
@@ -21,6 +22,25 @@ export const H2 = styled.h2<H2Props>`
   font-size: 1.6rem;
   text-align: ${({ center }) => (center ? 'center' : 'left')};
   margin-top: 0;
+`
+
+// styled components (alphabetical order)
+export const A = styled.a`
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: black;
+  background: lightblue;
+  border-radius: 5px;
+  padding: 0.5em 0.75em;
+
+  display: inline-flex;
+
+  &:focus,
+  &:hover {
+    opacity: 0.7;
+  }
 `
 
 export const Card = styled.div`
@@ -42,8 +62,8 @@ export const Container = styled.div`
 export const DeleteButton = styled.button`
   cursor: pointer;
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 0;
+  right: 0;
   background: none;
   margin: 0;
   padding: 0;
@@ -57,6 +77,11 @@ export const DeleteButton = styled.button`
   &:focus {
     outline: none;
   }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.3;
+  }
 `
 
 export const Form = styled.form`
@@ -69,6 +94,7 @@ export const Form = styled.form`
 export const Input = styled.input<InputProps>`
   width: 90%;
   max-width: 300px;
+  height: 40px;
   margin: 0 auto;
 
   & + & {

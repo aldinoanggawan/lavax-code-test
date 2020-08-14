@@ -1,11 +1,16 @@
 import { gql, useMutation } from '@apollo/client'
-import { useState } from 'react'
+import { useForm } from 'react-hook-form'
 
 import { GET_NOTES } from './NotesList'
 import { Form, Input } from '../styles/content'
 
+type FormData = {
+  title: string
+  description: string
+}
+
 const CREATE_NOTE_MUTATION = gql`
-  mutation CreateNote($noteInput: NoteInput) {
+  mutation CreateNote($noteInput: NoteInput!) {
     createNote(noteInput: $noteInput) {
       id
       title
@@ -15,26 +20,13 @@ const CREATE_NOTE_MUTATION = gql`
 `
 
 const AddNoteForm = () => {
-  const [title, setTitle] = useState('')
-  const [description, setDescription] = useState('')
+  const { register, handleSubmit, reset } = useForm<FormData>()
 
   const [createNote, { loading }] = useMutation(CREATE_NOTE_MUTATION)
 
-  const handleOnChangeTitle = (e: any) => {
-    setTitle(e.target.value)
-  }
-
-  const handleOnChangeDescription = (e: any) => {
-    setDescription(e.target.value)
-  }
-
-  const handleSubmit = (e: any) => {
-    e.preventDefault()
-    setTitle('')
-    setDescription('')
-
+  const onSubmit = handleSubmit(formData => {
     createNote({
-      variables: { noteInput: { title, description } },
+      variables: { noteInput: formData },
       update: (proxy, { data: { createNote } }) => {
         const data: any = proxy.readQuery({
           query: GET_NOTES,
@@ -49,23 +41,22 @@ const AddNoteForm = () => {
         })
       },
     })
-  }
+    reset()
+  })
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form onSubmit={onSubmit}>
       <Input
         name='title'
         type='text'
         placeholder='Enter title...'
-        value={title}
-        onChange={handleOnChangeTitle}
+        ref={register}
       />
       <Input
         name='description'
         type='text'
         placeholder='Enter description...'
-        value={description}
-        onChange={handleOnChangeDescription}
+        ref={register}
       />
       <Input
         button
