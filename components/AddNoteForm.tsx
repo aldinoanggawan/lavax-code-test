@@ -1,7 +1,7 @@
 import { gql, useMutation } from '@apollo/client'
 import { useForm } from 'react-hook-form'
 
-import { GET_NOTES } from './NotesList'
+import { GET_NOTES, notesQueryVars } from './NotesList'
 import { Form, Input } from '../styles/content'
 
 type FormData = {
@@ -30,16 +30,15 @@ const AddNoteForm = () => {
       update: (proxy, { data: { createNote } }) => {
         const data: any = proxy.readQuery({
           query: GET_NOTES,
+          variables: notesQueryVars,
         })
         // Update the cache with the new note
         proxy.writeQuery({
           query: GET_NOTES,
+          variables: notesQueryVars,
           data: {
             ...data,
-            notes: {
-              ...data.notes,
-              notes: [createNote, ...data.notes.notes],
-            },
+            notes: [createNote, ...data.notes],
           },
         })
       },

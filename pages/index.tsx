@@ -2,17 +2,19 @@ import { NextPage, GetStaticProps } from 'next'
 
 import { initializeApollo } from '../apollo/client'
 import AddNoteForm from '../components/AddNoteForm'
-import NotesList, { GET_NOTES } from '../components/NotesList'
+import NotesList, { GET_NOTES, notesQueryVars } from '../components/NotesList'
 import Layout from '../components/layout'
-import { Container } from '../styles/content'
+import { Container, Section } from '../styles/content'
 
 const Home: NextPage = () => {
   return (
     <Layout title='| Home'>
-      <Container>
-        <AddNoteForm />
-        <NotesList />
-      </Container>
+      <Section>
+        <Container>
+          <AddNoteForm />
+          <NotesList />
+        </Container>
+      </Section>
     </Layout>
   )
 }
@@ -23,6 +25,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
   await apolloClient.query({
     query: GET_NOTES,
+    variables: notesQueryVars,
   })
 
   return {

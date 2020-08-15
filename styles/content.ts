@@ -1,5 +1,14 @@
 import styled, { css } from 'styled-components'
 
+interface ButtonProps {
+  readonly moreNotes?: boolean
+}
+
+interface ContainerProps {
+  readonly pagination?: boolean
+  readonly row?: boolean
+}
+
 interface H2Props {
   readonly center?: boolean
 }
@@ -43,8 +52,33 @@ export const A = styled.a`
   }
 `
 
+export const Button = styled.button<ButtonProps>`
+  ${({ moreNotes }) =>
+    moreNotes &&
+    css`
+      cursor: pointer;
+      display: block;
+      width: 100%;
+      max-width: 500px;
+      height: 40px;
+      text-transform: uppercase;
+      font-weight: 500;
+      color: #fff;
+      margin: 0 auto;
+      border: none;
+      border-radius: 5px;
+      background: #0ce5e1;
+
+      &:focus,
+      &:hover {
+        opacity: 0.7;
+      }
+    `}
+`
+
 export const Card = styled.div`
   position: relative;
+  background: #ffffff;
   width: 100%;
   max-width: 500px;
   margin: 0 auto 2em;
@@ -53,10 +87,24 @@ export const Card = styled.div`
   border-radius: 10px;
 `
 
-export const Container = styled.div`
+export const Container = styled.div<ContainerProps>`
   width: 90%;
   max-width: 1100px;
   margin: 0 auto;
+
+  ${({ pagination }) =>
+    pagination &&
+    css`
+      width: 100%;
+      margin-top: 2em;
+    `}
+
+  ${({ row }) =>
+    row &&
+    css`
+      display: flex;
+      justify-content: space-between;
+    `}
 `
 
 export const DeleteButton = styled.button`
@@ -112,6 +160,12 @@ export const Row = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: 2em;
+`
+
+export const Section = styled.section`
+  padding: 1em 0 2em;
+  background: #f4fffd;
+  min-height: 100vh;
 `
 
 export const Span = styled.span<SpanProps>`
