@@ -1,7 +1,8 @@
 import { gql, useMutation, useQuery } from '@apollo/client'
+import { useState } from 'react'
 
 import Note from './Note'
-import { H2, Button } from '../styles/content'
+import { H2, Button, Div, Span } from '../styles/content'
 
 interface Notes {
   id: string
@@ -20,6 +21,7 @@ interface NotesVars {
   first?: number
   skip?: number
   search?: string | string[]
+  important?: boolean
 }
 
 interface NotesListProps {
@@ -63,9 +65,12 @@ export const notesQueryVars = {
   first: 5,
   skip: 0,
   search: '',
+  important: false,
 }
 
 const NotesList = ({ searchQueryVars }: NotesListProps) => {
+  const [isNotFiltered, setIsNotFiltered] = useState(true)
+
   const { data, fetchMore } = useQuery<NotesData, NotesVars>(GET_NOTES, {
     variables: searchQueryVars ?? notesQueryVars,
   })
@@ -119,10 +124,42 @@ const NotesList = ({ searchQueryVars }: NotesListProps) => {
     })
   }
 
+  const toggleFilter = () => {
+    setIsNotFiltered(prevState => !prevState)
+
+    fetchMore({
+      variables: {
+        first: 0,
+        important: isNotFiltered,
+      },
+      updateQuery: (prev, { fetchMoreResult }: any) => {
+        if (!fetchMoreResult) return prev
+        return Object.assign({}, prev, {
+          notes: [...fetchMoreResult.notes],
+        })
+      },
+    })
+  }
+
   const areMoreNotes = data?.notes.length < data?.totalCount
+  const showButton = isNotFiltered && !searchQueryVars
 
   return (
     <>
+      {!searchQueryVars && (
+        <Div>
+          <Span>
+            Filter:{' '}
+            <Button
+              filter='true'
+              bright={!isNotFiltered}
+              onClick={() => toggleFilter()}
+            >
+              Important
+            </Button>
+          </Span>
+        </Div>
+      )}
       {sortedNotes.length ? (
         sortedNotes.map(note => (
           <Note
@@ -137,7 +174,7 @@ const NotesList = ({ searchQueryVars }: NotesListProps) => {
           No available note
         </H2>
       )}
-      {areMoreNotes && !searchQueryVars && (
+      {areMoreNotes && showButton && (
         <Button moreNotes onClick={() => loadMoreNotes()}>
           More Notes
         </Button>

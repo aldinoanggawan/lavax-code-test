@@ -5,6 +5,8 @@ interface AProps {
 }
 
 interface ButtonProps {
+  readonly filter?: boolean | string
+  readonly bright?: boolean
   readonly moreNotes?: boolean
 }
 
@@ -76,10 +78,26 @@ export const A = styled.a<AProps>`
 `
 
 export const Button = styled.button<ButtonProps>`
+  cursor: pointer;
+  border: none;
+  opacity: ${({ bright }) => (bright ? '1' : '0.5')};
+
+  &:hover {
+    opacity: 0.7;
+  }
+
+  ${({ filter }) =>
+    filter &&
+    css`
+      display: inline-flex;
+      color: #ffffff;
+      background: #0ce5e1;
+      padding: 0.3em;
+    `}
+
   ${({ moreNotes }) =>
     moreNotes &&
     css`
-      cursor: pointer;
       display: block;
       width: 100%;
       max-width: 500px;
@@ -88,14 +106,9 @@ export const Button = styled.button<ButtonProps>`
       font-weight: 500;
       color: #fff;
       margin: 0 auto;
-      border: none;
       border-radius: 5px;
       background: #0ce5e1;
-
-      &:focus,
-      &:hover {
-        opacity: 0.7;
-      }
+      opacity: 1;
     `}
 `
 
@@ -160,6 +173,10 @@ export const DeleteButton = styled.button`
     cursor: not-allowed;
     opacity: 0.3;
   }
+`
+
+export const Div = styled.div`
+  margin-bottom: 2em;
 `
 
 export const Form = styled.form<FormProps>`
