@@ -7,6 +7,7 @@ interface Notes {
   id: string
   title: string
   description: string
+  important: boolean
   updatedAt: number
 }
 
@@ -26,17 +27,24 @@ interface NotesListProps {
 }
 
 export const GET_NOTES = gql`
-  query GetNotes($first: Int, $skip: Int, $search: String) {
+  query GetNotes(
+    $first: Int
+    $skip: Int
+    $search: String
+    $important: Boolean
+  ) {
     totalCount
     notes(
       orderBy: { field: "updatedAt", order: DESC }
       first: $first
       skip: $skip
       search: $search
+      important: $important
     ) {
       id
       title
       description
+      important
       updatedAt
     }
   }

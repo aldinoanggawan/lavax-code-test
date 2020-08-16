@@ -7,14 +7,17 @@ import { Form, Input } from '../styles/content'
 type FormData = {
   title: string
   description: string
+  important: boolean
 }
 
 const CREATE_NOTE_MUTATION = gql`
-  mutation CreateNote($noteInput: NoteInput!) {
-    createNote(noteInput: $noteInput) {
+  mutation CreateNote($noteInput: NoteInput!, $important: Boolean) {
+    createNote(noteInput: $noteInput, important: $important) {
       id
       title
       description
+      updatedAt
+      important
     }
   }
 `
@@ -24,9 +27,9 @@ const AddNoteForm = () => {
 
   const [createNote, { loading }] = useMutation(CREATE_NOTE_MUTATION)
 
-  const onSubmit = handleSubmit(formData => {
+  const onSubmit = handleSubmit(({ title, description, important }) => {
     createNote({
-      variables: { noteInput: formData },
+      variables: { noteInput: { title, description }, important },
       update: (proxy, { data: { createNote } }) => {
         const data: any = proxy.readQuery({
           query: GET_NOTES,
@@ -65,6 +68,10 @@ const AddNoteForm = () => {
         placeholder='Enter description...'
         ref={register}
       />
+      <div>
+        <input name='important' id='important' type='checkbox' ref={register} />
+        <label htmlFor='important'>Important ?</label>
+      </div>
       <Input
         button
         type='submit'

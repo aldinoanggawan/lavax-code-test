@@ -20,6 +20,7 @@ interface FormProps {
 
 interface H2Props {
   readonly center?: boolean
+  readonly important?: boolean
   readonly light?: boolean
 }
 
@@ -41,6 +42,7 @@ export const H1 = styled.h1`
 export const H2 = styled.h2<H2Props>`
   font-size: 1.6rem;
   text-align: ${({ center }) => (center ? 'center' : 'left')};
+  color: ${({ important }) => (important ? 'red' : 'black')};
   opacity: ${({ light }) => (light ? '0.5' : '1')};
   margin-top: 0;
 `

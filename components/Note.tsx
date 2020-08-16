@@ -9,6 +9,7 @@ type NoteProps = {
   title: string
   description: string
   loading: boolean
+  important: boolean
   updatedAt: number
   handleDeleteNote: (id: string) => void
 }
@@ -18,6 +19,7 @@ const Note = ({
   title,
   description,
   loading,
+  important,
   updatedAt,
   handleDeleteNote,
 }: NoteProps) => {
@@ -27,7 +29,7 @@ const Note = ({
       <DeleteButton disabled={loading} onClick={() => handleDeleteNote(id)}>
         <DeleteIcon />
       </DeleteButton>
-      <H2>{title}</H2>
+      <H2 important={important}>{title}</H2>
       <p>{description}</p>
       <Row>
         <Span date>{date}</Span>
