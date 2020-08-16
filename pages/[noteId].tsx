@@ -11,7 +11,7 @@ const Note: NextPage = () => {
   const { noteId } = router.query
 
   return (
-    <Layout title='| Note'>
+    <Layout title='| Edit Note'>
       <Section edit>
         <Container>
           <UpdateNoteForm noteId={noteId} />

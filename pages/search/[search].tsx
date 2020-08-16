@@ -15,7 +15,7 @@ const search = () => {
   }
 
   return (
-    <Layout title={`| ${search}`}>
+    <Layout title={`| Search '${search}'`}>
       <Section>
         <Container>
           <H2 center>Showing results for '{search}'</H2>
