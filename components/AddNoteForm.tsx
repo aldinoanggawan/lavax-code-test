@@ -41,6 +41,11 @@ const AddNoteForm = () => {
             notes: [createNote, ...data.notes],
           },
         })
+        //Tell cache that the existing note data can be safely ignored (https://github.com/apollographql/apollo-client/issues/6451)
+        proxy.evict({
+          fieldName: 'notes',
+          broadcast: false,
+        })
       },
     })
     reset()

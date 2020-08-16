@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react'
 import Head from 'next/head'
+import Navbar from './Navbar'
 
 type Props = {
   children?: ReactNode
@@ -17,6 +18,7 @@ const Layout = ({ children, title }: Props) => (
         rel='stylesheet'
       ></link>
     </Head>
+    <Navbar />
     {children}
   </>
 )

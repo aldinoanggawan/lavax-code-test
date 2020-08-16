@@ -1,20 +1,31 @@
 import styled, { css } from 'styled-components'
 
+interface AProps {
+  readonly nav?: boolean
+}
+
 interface ButtonProps {
   readonly moreNotes?: boolean
 }
 
 interface ContainerProps {
+  readonly nav?: boolean
   readonly pagination?: boolean
   readonly row?: boolean
 }
 
+interface FormProps {
+  readonly nav?: boolean
+}
+
 interface H2Props {
   readonly center?: boolean
+  readonly light?: boolean
 }
 
 interface InputProps {
   readonly button?: boolean
+  readonly nav?: boolean
 }
 
 interface SpanProps {
@@ -30,11 +41,12 @@ export const H1 = styled.h1`
 export const H2 = styled.h2<H2Props>`
   font-size: 1.6rem;
   text-align: ${({ center }) => (center ? 'center' : 'left')};
+  opacity: ${({ light }) => (light ? '0.5' : '1')};
   margin-top: 0;
 `
 
 // styled components (alphabetical order)
-export const A = styled.a`
+export const A = styled.a<AProps>`
   cursor: pointer;
   text-decoration: none;
   font-size: 0.9rem;
@@ -50,6 +62,15 @@ export const A = styled.a`
   &:hover {
     opacity: 0.7;
   }
+
+  ${({ nav }) =>
+    nav &&
+    css`
+      font-size: 1rem;
+      background: none;
+      border-radius: 0;
+      padding: 0;
+    `}
 `
 
 export const Button = styled.button<ButtonProps>`
@@ -92,6 +113,13 @@ export const Container = styled.div<ContainerProps>`
   max-width: 1100px;
   margin: 0 auto;
 
+    ${({ nav }) =>
+      nav &&
+      css`
+        display: flex;
+        justify-content: center;
+      `}
+
   ${({ pagination }) =>
     pagination &&
     css`
@@ -132,11 +160,23 @@ export const DeleteButton = styled.button`
   }
 `
 
-export const Form = styled.form`
+export const Form = styled.form<FormProps>`
   text-align: center;
   margin: 1em 0 2em;
   display: flex;
   flex-direction: column;
+
+  ${({ nav }) =>
+    nav &&
+    css`
+      margin: 0;
+    `}
+`
+
+export const Header = styled.header`
+  padding: 1em 0;
+  background: #ffffff;
+  border-bottom: 1px solid black;
 `
 
 export const Input = styled.input<InputProps>`
@@ -154,6 +194,28 @@ export const Input = styled.input<InputProps>`
     css`
       cursor: pointer;
     `}
+
+  ${({ nav }) =>
+    nav &&
+    css`
+      width: 100%;
+    `}
+`
+
+export const Nav = styled.ul`
+  list-style: none;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+`
+
+export const NavItem = styled.li`
+  text-transform: uppercase;
+
+  & + & {
+    margin-left: 2em;
+  }
 `
 
 export const Row = styled.div`

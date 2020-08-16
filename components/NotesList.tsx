@@ -16,9 +16,13 @@ interface NotesData {
 }
 
 interface NotesVars {
-  first: number
-  skip: number
-  search: string
+  first?: number
+  skip?: number
+  search?: string | string[]
+}
+
+interface NotesListProps {
+  searchQueryVars?: NotesVars
 }
 
 export const GET_NOTES = gql`
@@ -53,9 +57,9 @@ export const notesQueryVars = {
   search: '',
 }
 
-const NotesList = () => {
+const NotesList = ({ searchQueryVars }: NotesListProps) => {
   const { data, fetchMore } = useQuery<NotesData, NotesVars>(GET_NOTES, {
-    variables: notesQueryVars,
+    variables: searchQueryVars ?? notesQueryVars,
   })
   // to fix the order after updating the note in SSR mode
   const sortedNotes = [...data?.notes].sort((a, b) => b.updatedAt - a.updatedAt)
@@ -66,11 +70,11 @@ const NotesList = () => {
     deleteNote({
       variables: { id },
       update: proxy => {
-        const data: NotesData = proxy.readQuery({
+        const data = proxy.readQuery<NotesData>({
           query: GET_NOTES,
           variables: notesQueryVars,
         })
-        const newData: any = data.notes.filter((n: Notes) => n.id !== id)
+        const newData = data?.notes.filter((n: Notes) => n.id !== id)
         //Tell cache that the existing note data can be safely ignored (https://github.com/apollographql/apollo-client/issues/6451)
         proxy.evict({
           fieldName: 'notes',
@@ -83,7 +87,7 @@ const NotesList = () => {
           data: {
             ...data,
             notes: {
-              ...data.notes,
+              ...data?.notes,
               notes: newData,
             },
           },
@@ -121,9 +125,11 @@ const NotesList = () => {
           />
         ))
       ) : (
-        <H2 center>No available note</H2>
+        <H2 center light>
+          No available note
+        </H2>
       )}
-      {areMoreNotes && (
+      {areMoreNotes && !searchQueryVars && (
         <Button moreNotes onClick={() => loadMoreNotes()}>
           More Notes
         </Button>
