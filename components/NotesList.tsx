@@ -82,19 +82,19 @@ const NotesList = ({ searchQueryVars }: NotesListProps) => {
   const handleDeleteNote = (id: string) => {
     deleteNote({
       variables: { id },
-      update: proxy => {
-        const data = proxy.readQuery<NotesData>({
+      update: cache => {
+        const data = cache.readQuery<NotesData>({
           query: GET_NOTES,
           variables: notesQueryVars,
         })
         const newData = data?.notes.filter((n: Notes) => n.id !== id)
         //Tell cache that the existing note data can be safely ignored (https://github.com/apollographql/apollo-client/issues/6451)
-        proxy.evict({
+        cache.evict({
           fieldName: 'notes',
           broadcast: false,
         })
         // Update the cache without the deleted note
-        proxy.writeQuery({
+        cache.writeQuery({
           query: GET_NOTES,
           variables: notesQueryVars,
           data: {

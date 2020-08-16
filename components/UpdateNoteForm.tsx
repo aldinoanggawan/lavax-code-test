@@ -2,7 +2,7 @@ import { gql, useMutation, useQuery } from '@apollo/client'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 
-import { Form, Input } from '../styles/content'
+import { Form, Input, TextArea } from '../styles/content'
 
 type FormData = {
   title: string
@@ -63,9 +63,8 @@ const UpdateNoteForm = ({ noteId }: UpdateNoteFormProps) => {
         ref={register}
         defaultValue={data.note.title}
       />
-      <Input
+      <TextArea
         name='description'
-        type='text'
         ref={register}
         defaultValue={data.note.description}
       />

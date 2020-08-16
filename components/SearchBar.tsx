@@ -1,7 +1,8 @@
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 
-import { Form, Input } from '../styles/content'
+import { Button, Form, Input } from '../styles/content'
+import { SearchIcon } from '../styles/icons'
 
 const SearchBar = () => {
   const router = useRouter()
@@ -20,6 +21,9 @@ const SearchBar = () => {
         placeholder='Search...'
         ref={register}
       />
+      <Button navButton type='submit'>
+        <SearchIcon />
+      </Button>
     </Form>
   )
 }

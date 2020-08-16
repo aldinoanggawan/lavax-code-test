@@ -4,7 +4,7 @@ import { initializeApollo } from '../apollo/client'
 import AddNoteForm from '../components/AddNoteForm'
 import NotesList, { GET_NOTES, notesQueryVars } from '../components/NotesList'
 import Layout from '../components/layout'
-import { Container, Section } from '../styles/content'
+import { Container, Footer, Section } from '../styles/content'
 
 const Home: NextPage = () => {
   return (
@@ -15,6 +15,10 @@ const Home: NextPage = () => {
           <NotesList />
         </Container>
       </Section>
+      <Footer>
+        This is a static page, to get the latest update, refresh the page 2
+        times.
+      </Footer>
     </Layout>
   )
 }

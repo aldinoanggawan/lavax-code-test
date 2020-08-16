@@ -1,39 +1,16 @@
 import styled, { css } from 'styled-components'
-
-interface AProps {
-  readonly nav?: boolean
-}
-
-interface ButtonProps {
-  readonly filter?: boolean | string
-  readonly bright?: boolean
-  readonly moreNotes?: boolean
-}
-
-interface ContainerProps {
-  readonly nav?: boolean
-  readonly pagination?: boolean
-  readonly row?: boolean
-}
-
-interface FormProps {
-  readonly nav?: boolean
-}
-
-interface H2Props {
-  readonly center?: boolean
-  readonly important?: boolean
-  readonly light?: boolean
-}
-
-interface InputProps {
-  readonly button?: boolean
-  readonly nav?: boolean
-}
-
-interface SpanProps {
-  readonly date?: boolean
-}
+import {
+  H2Props,
+  AProps,
+  ButtonProps,
+  CardProps,
+  ContainerProps,
+  DivProps,
+  FormProps,
+  InputProps,
+  SectionProps,
+  SpanProps,
+} from './styleTypes'
 
 // typography (alphabetical order)
 export const H1 = styled.h1`
@@ -44,9 +21,13 @@ export const H1 = styled.h1`
 export const H2 = styled.h2<H2Props>`
   font-size: 1.6rem;
   text-align: ${({ center }) => (center ? 'center' : 'left')};
-  color: ${({ important }) => (important ? 'red' : 'black')};
+  color: ${({ important }) => (important ? '#ed2f6c' : '#f8f8f8')};
   opacity: ${({ light }) => (light ? '0.5' : '1')};
   margin-top: 0;
+`
+
+export const P = styled.p`
+  color: #ffffff;
 `
 
 // styled components (alphabetical order)
@@ -55,8 +36,8 @@ export const A = styled.a<AProps>`
   text-decoration: none;
   font-size: 0.9rem;
   font-weight: 500;
-  color: black;
-  background: lightblue;
+  color: #ffffff;
+  background: #49545b;
   border-radius: 5px;
   padding: 0.5em 0.75em;
 
@@ -86,13 +67,22 @@ export const Button = styled.button<ButtonProps>`
     opacity: 0.7;
   }
 
+  &:focus {
+    outline: none;
+  }
+
   ${({ filter }) =>
     filter &&
     css`
       display: inline-flex;
       color: #ffffff;
-      background: #0ce5e1;
+      background: #ed2f6c;
+      margin-left: 1em;
       padding: 0.3em;
+
+      &:hover {
+        opacity: 1;
+      }
     `}
 
   ${({ moreNotes }) =>
@@ -107,32 +97,49 @@ export const Button = styled.button<ButtonProps>`
       color: #fff;
       margin: 0 auto;
       border-radius: 5px;
-      background: #0ce5e1;
+      background: #03a1a8;
       opacity: 1;
     `}
+
+    ${({ navButton }) =>
+      navButton &&
+      css`
+        cursor: pointer;
+        background: none;
+        margin: 0 0 0 -30px;
+        padding: 0;
+        opacity: 1;
+      `}
 `
 
-export const Card = styled.div`
+export const Card = styled.div<CardProps>`
   position: relative;
-  background: #ffffff;
+  background: #2e3135;
   width: 100%;
   max-width: 500px;
   margin: 0 auto 2em;
   padding: 1em;
-  border: 1px solid black;
   border-radius: 10px;
+
+  ${({ form }) =>
+    form &&
+    css`
+      width: 90%;
+      border-radius: 3px;
+    `}
 `
 
 export const Container = styled.div<ContainerProps>`
   width: 90%;
-  max-width: 1100px;
+  max-width: 500px;
   margin: 0 auto;
 
     ${({ nav }) =>
       nav &&
       css`
+        max-width: 1000px;
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
       `}
 
   ${({ pagination }) =>
@@ -175,50 +182,103 @@ export const DeleteButton = styled.button`
   }
 `
 
-export const Div = styled.div`
+export const Div = styled.div<DivProps>`
   margin-bottom: 2em;
+
+  ${({ form }) =>
+    form &&
+    css`
+      text-align: left;
+      margin: 1em 0 1.5em;
+    `}
+`
+
+export const Footer = styled.footer`
+  font-size: 0.625rem;
+  text-align: center;
+  color: #ffffff;
+  background: #345268;
+  padding: 0.5em 0;
 `
 
 export const Form = styled.form<FormProps>`
   text-align: center;
-  margin: 1em 0 2em;
   display: flex;
   flex-direction: column;
 
   ${({ nav }) =>
     nav &&
     css`
+      flex-direction: row;
       margin: 0;
     `}
 `
 
 export const Header = styled.header`
   padding: 1em 0;
-  background: #ffffff;
+  background: #090909;
   border-bottom: 1px solid black;
 `
 
 export const Input = styled.input<InputProps>`
-  width: 90%;
-  max-width: 300px;
+  width: 100%;
   height: 40px;
-  margin: 0 auto;
+  color: #ffffff;
+  margin: 0 auto 1em;
+  background: #49545b;
+  border: none;
+  border-radius: 3px;
 
-  & + & {
-    margin-top: 1em;
+  &::placeholder {
+    color: #c6c6c6;
+  }
+
+  &:focus {
+    outline: none;
   }
 
   ${({ button }) =>
     button &&
     css`
       cursor: pointer;
+      color: #ffffff;
+      font-weight: 500;
+      margin: 0 auto;
+      background: #00c6cf;
+      border: none;
+      border-radius: 3px;
+
+      &:focus,
+      &:hover {
+        opacity: 0.7;
+      }
+
+      &:focus {
+        outline: none;
+      }
     `}
 
   ${({ nav }) =>
     nav &&
     css`
-      width: 100%;
+      display: inline-flex;
+      width: 180px;
+      margin: 0;
     `}
+
+  ${({ navButton }) =>
+    navButton &&
+    css`
+      display: inline-flex;
+      justify-content: center;
+      width: 40px;
+      margin: 0 0 0 -40px;
+      background: #a9cec2;
+    `}
+`
+
+export const Label = styled.label`
+  color: #ffffff;
 `
 
 export const Nav = styled.ul`
@@ -243,18 +303,46 @@ export const Row = styled.div`
   margin-top: 2em;
 `
 
-export const Section = styled.section`
+export const Section = styled.section<SectionProps>`
   padding: 1em 0 2em;
-  background: #f4fffd;
+  background: #111111;
   min-height: 100vh;
+
+  ${({ edit }) =>
+    edit &&
+    css`
+      padding-top: 5em;
+    `}
 `
 
 export const Span = styled.span<SpanProps>`
+  color: #ffffff;
+
   ${({ date }) =>
     date &&
     css`
       font-size: 0.625rem;
-      opacity: 0.6;
+      color: #98999f;
       align-self: flex-end;
     `}
+`
+export const TextArea = styled.textarea`
+  display: block;
+  width: 90%;
+  min-width: 100%;
+  max-width: 100%;
+  min-height: 70px;
+  color: #ffffff;
+  margin: 0 auto 1em;
+  background: #49545b;
+  border: none;
+  border-radius: 3px;
+
+  &::placeholder {
+    color: #c6c6c6;
+  }
+
+  &:focus {
+    outline: none;
+  }
 `

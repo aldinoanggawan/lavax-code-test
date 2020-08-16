@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { initializeApollo } from '../apollo/client'
 import Layout from '../components/layout'
 import UpdateNoteForm, { GET_NOTE } from '../components/UpdateNoteForm'
-import { Container } from '../styles/content'
+import { Container, Section } from '../styles/content'
 
 const Note: NextPage = () => {
   const router = useRouter()
@@ -12,9 +12,11 @@ const Note: NextPage = () => {
 
   return (
     <Layout title='| Note'>
-      <Container>
-        <UpdateNoteForm noteId={noteId} />
-      </Container>
+      <Section edit>
+        <Container>
+          <UpdateNoteForm noteId={noteId} />
+        </Container>
+      </Section>
     </Layout>
   )
 }

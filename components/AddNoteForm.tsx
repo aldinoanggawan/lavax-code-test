@@ -2,7 +2,7 @@ import { gql, useMutation } from '@apollo/client'
 import { useForm } from 'react-hook-form'
 
 import { GET_NOTES, notesQueryVars } from './NotesList'
-import { Form, Input } from '../styles/content'
+import { H2, Card, Div, Form, Input, Label, TextArea } from '../styles/content'
 
 type FormData = {
   title: string
@@ -30,13 +30,13 @@ const AddNoteForm = () => {
   const onSubmit = handleSubmit(({ title, description, important }) => {
     createNote({
       variables: { noteInput: { title, description }, important },
-      update: (proxy, { data: { createNote } }) => {
-        const data: any = proxy.readQuery({
+      update: (cache, { data: { createNote } }) => {
+        const data: any = cache.readQuery({
           query: GET_NOTES,
           variables: notesQueryVars,
         })
         // Update the cache with the new note
-        proxy.writeQuery({
+        cache.writeQuery({
           query: GET_NOTES,
           variables: notesQueryVars,
           data: {
@@ -45,7 +45,7 @@ const AddNoteForm = () => {
           },
         })
         //Tell cache that the existing note data can be safely ignored (https://github.com/apollographql/apollo-client/issues/6451)
-        proxy.evict({
+        cache.evict({
           fieldName: 'notes',
           broadcast: false,
         })
@@ -55,30 +55,37 @@ const AddNoteForm = () => {
   })
 
   return (
-    <Form onSubmit={onSubmit}>
-      <Input
-        name='title'
-        type='text'
-        placeholder='Enter title...'
-        ref={register}
-      />
-      <Input
-        name='description'
-        type='text'
-        placeholder='Enter description...'
-        ref={register}
-      />
-      <div>
-        <input name='important' id='important' type='checkbox' ref={register} />
-        <label htmlFor='important'>Important ?</label>
-      </div>
-      <Input
-        button
-        type='submit'
-        disabled={loading}
-        value={loading ? 'LOADING...' : 'SUBMIT'}
-      />
-    </Form>
+    <Card form='true'>
+      <H2 center>Add Note</H2>
+      <Form onSubmit={onSubmit}>
+        <Input
+          name='title'
+          type='text'
+          placeholder='Enter title...'
+          ref={register}
+        />
+        <TextArea
+          name='description'
+          placeholder='Enter description...'
+          ref={register}
+        />
+        <Div form='true'>
+          <input
+            name='important'
+            id='important'
+            type='checkbox'
+            ref={register}
+          />
+          <Label htmlFor='important'>Important</Label>
+        </Div>
+        <Input
+          button
+          type='submit'
+          disabled={loading}
+          value={loading ? 'LOADING...' : 'SUBMIT'}
+        />
+      </Form>
+    </Card>
   )
 }
 

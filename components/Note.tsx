@@ -1,7 +1,7 @@
 import moment from 'moment'
 import Link from 'next/link'
 
-import { H2, A, DeleteButton, Card, Row, Span } from '../styles/content'
+import { H2, P, A, DeleteButton, Card, Row, Span } from '../styles/content'
 import { DeleteIcon } from '../styles/icons'
 
 type NoteProps = {
@@ -30,7 +30,7 @@ const Note = ({
         <DeleteIcon />
       </DeleteButton>
       <H2 important={important}>{title}</H2>
-      <p>{description}</p>
+      <P>{description}</P>
       <Row>
         <Span date>{date}</Span>
         <Link href={`/${id}`} passHref>
