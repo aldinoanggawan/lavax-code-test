@@ -4,4 +4,13 @@ module.exports = withPWA({
   pwa: {
     dest: 'public',
   },
+  async redirects() {
+    return [
+      {
+        source: '/search',
+        destination: '/',
+        permanent: true,
+      },
+    ]
+  },
 })
