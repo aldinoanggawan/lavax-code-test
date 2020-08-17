@@ -1,10 +1,10 @@
 import { GetServerSideProps, NextPage } from 'next'
 import { useRouter } from 'next/router'
 
-import { initializeApollo } from '../apollo/client'
-import Layout from '../components/layout'
-import UpdateNoteForm, { GET_NOTE } from '../components/UpdateNoteForm'
-import { Container, Section } from '../styles/content'
+import { initializeApollo } from '../../apollo/client'
+import Layout from '../../components/layout'
+import UpdateNoteForm, { GET_NOTE } from '../../components/UpdateNoteForm'
+import { Container, Section } from '../../styles/content'
 
 const Note: NextPage = () => {
   const router = useRouter()

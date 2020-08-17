@@ -11,6 +11,11 @@ module.exports = withPWA({
         destination: '/',
         permanent: true,
       },
+      {
+        source: '/note',
+        destination: '/',
+        permanent: true,
+      },
     ]
   },
 })

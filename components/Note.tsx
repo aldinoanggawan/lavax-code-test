@@ -37,7 +37,7 @@ const Note = ({
       <P>{description}</P>
       <Row>
         <Span date>{date}</Span>
-        <Link href={`/${id}`} passHref>
+        <Link href={`/note/${id}`} passHref>
           <A>Edit</A>
         </Link>
       </Row>
