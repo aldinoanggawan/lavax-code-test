@@ -13,6 +13,7 @@ const Layout = ({ children, title }: Props) => (
       <title>LavaNote {title}</title>
       <meta charSet='utf-8' />
       <meta name='viewport' content='initial-scale=1.0, width=device-width' />
+      <link href='/manifest.json' rel='manifest'></link>
       <link
         href='https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap'
         rel='stylesheet'
