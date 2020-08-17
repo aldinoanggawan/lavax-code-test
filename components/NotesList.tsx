@@ -142,7 +142,8 @@ const NotesList = ({ searchQueryVars }: NotesListProps) => {
   }
 
   const areMoreNotes = data?.notes.length < data?.totalCount
-  const showButton = isNotFiltered && !searchQueryVars
+  const isSearchPage = searchQueryVars ? true : false
+  const isHomePage = isNotFiltered && !isSearchPage
 
   return (
     <>
@@ -167,6 +168,7 @@ const NotesList = ({ searchQueryVars }: NotesListProps) => {
             {...note}
             handleDeleteNote={handleDeleteNote}
             loading={loading}
+            isSearchPage={isSearchPage}
           />
         ))
       ) : (
@@ -174,7 +176,7 @@ const NotesList = ({ searchQueryVars }: NotesListProps) => {
           No available note
         </H2>
       )}
-      {areMoreNotes && showButton && (
+      {areMoreNotes && isHomePage && (
         <Button moreNotes onClick={() => loadMoreNotes()}>
           More Notes
         </Button>

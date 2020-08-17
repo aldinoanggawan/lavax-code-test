@@ -10,6 +10,7 @@ type NoteProps = {
   description: string
   loading: boolean
   important: boolean
+  isSearchPage: boolean
   updatedAt: number
   handleDeleteNote: (id: string) => void
 }
@@ -20,15 +21,18 @@ const Note = ({
   description,
   loading,
   important,
+  isSearchPage,
   updatedAt,
   handleDeleteNote,
 }: NoteProps) => {
   const date = moment(updatedAt).format('lll')
   return (
     <Card>
-      <DeleteButton disabled={loading} onClick={() => handleDeleteNote(id)}>
-        <DeleteIcon />
-      </DeleteButton>
+      {!isSearchPage && (
+        <DeleteButton disabled={loading} onClick={() => handleDeleteNote(id)}>
+          <DeleteIcon />
+        </DeleteButton>
+      )}
       <H2 important={important}>{title}</H2>
       <P>{description}</P>
       <Row>
