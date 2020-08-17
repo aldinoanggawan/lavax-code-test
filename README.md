@@ -1,4 +1,12 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## LavaNote (LavaX Code Test)
+
+This project is a code test from [LavaX](https://www.lavax.co/) which was built with Next.js and it is a Progressive Web App.
+
+The idea behind this project is to implement Next.js data fetching method `getStaticProps` which fetches data during build time, and `getServerSideProps` which fetches data on each request in the server side while integrating it with Apollo GraphQL.
+
+Every note on the homepage is fetched during build time, and is saved in Apollo cache. When user visits the web-app, any notes that are available from the build time will be shown constantly without the need to fetch another request on the client side.
+
+To make sure that the user can get the latest data after adding a note, incremental static generation is used by adding `revalidate = 1` in the return values of `getStaticProps` which will attempt the page to regenerate when request comes in at most once every second.
 
 ## Getting Started
 
@@ -6,25 +14,14 @@ First, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Backend
 
-## Learn More
+The backend of this project was made with node.js and can be checked here [lavax-code-test-backend](https://github.com/aldinoanggawan/lavax-code-test-backend).
 
-To learn more about Next.js, take a look at the following resources:
+## Live
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+This project has also been deployed using Vercel and can be accessed here [LavaNote](https://lavanote.vercel.app/).
